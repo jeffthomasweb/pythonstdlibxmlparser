@@ -1,6 +1,5 @@
 import xml.etree.ElementTree as ET
 
-
 def xml_parser_xpath() -> list[str]:
 
     read_file_as_bytes: bytes = b""
@@ -24,9 +23,10 @@ def xml_parser_xpath() -> list[str]:
     length_xpath_stories: int = len(xpath_title)
     
     for i in range(0, length_xpath_stories):
-        #Ignore mypy typing for range() and adding strings 
-        #as the annotations can get complicated for not a lot of benefit
-        final_list.append(xpath_title[i].text + " " + xpath_description[i].text) #type: ignore[operator]
+        if (xpath_title[i].text is not None and xpath_description[i].text is not None):
+            final_list.append(" ".join([str(xpath_title[i].text), \
+                str(xpath_description[i].text)]))
+    
     return final_list
 
 xml_text_as_list: list[str] = xml_parser_xpath()
@@ -63,8 +63,8 @@ def xml_parser_nested_loop() -> list[str]:
     length_stories: int = len(list_of_stories_title)
 
     for x in range(0, length_stories):
-        final_list.append(list_of_stories_title[x] + \
-        " " + list_of_stories_description[x])
+        final_list.append(" ".join([list_of_stories_title[x], \
+                list_of_stories_description[x]]))
     
     return final_list
 
